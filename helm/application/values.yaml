@@ -1,0 +1,6 @@
+replicaCount: 2
+
+image:
+  repository: devsecops-app
+  tag: latest
+  pullPolicy: IfNotPresent

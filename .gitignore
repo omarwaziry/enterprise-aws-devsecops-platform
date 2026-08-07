@@ -1,0 +1,35 @@
+# IntelliJ
+.idea/
+
+# VSCode
+.vscode/
+
+# Maven
+target/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+*.tfplan
+issues.txt
+
+# Logs
+*.log
+
+
+# Windows
+Thumbs.db
+
+# Environment
+.env
+
+# Kubernetes
+kubeconfig
+
+# Helm
+*.tgz

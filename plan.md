@@ -136,6 +136,8 @@ plan.md
 
 # Project Phases
 
+> Current Phase: Phase 3 — Docker (In Progress)
+
 ---
 
 # Phase 1 — Project Initialization
@@ -162,6 +164,9 @@ Repository initialized.
 
 # Phase 2 — Build Application
 
+## Status
+Completed
+
 ## Goal
 
 Develop a production-ready Spring Boot application.
@@ -182,6 +187,9 @@ Application runs locally.
 ---
 
 # Phase 3 — Docker
+
+## Status
+In Progress
 
 ## Goal
 
