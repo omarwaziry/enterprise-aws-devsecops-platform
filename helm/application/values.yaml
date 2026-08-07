@@ -1,6 +1,42 @@
 replicaCount: 2
 
 image:
-  repository: devsecops-app
-  tag: latest
+  repository: 914773267488.dkr.ecr.us-east-1.amazonaws.com/devsecops-platform
+  tag: "local"
   pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+probes:
+  readiness:
+    path: /api/v1/ready
+    initialDelaySeconds: 10
+    periodSeconds: 10
+
+  liveness:
+    path: /actuator/health
+    initialDelaySeconds: 20
+    periodSeconds: 15
+
+ingress:
+  enabled: true
+  className: alb
+  scheme: internet-facing
+  targetType: ip
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70

@@ -2,21 +2,17 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "21.24.0"
 
-  name = var.cluster_name
-
+  name               = var.cluster_name
   kubernetes_version = var.kubernetes_version
 
-  vpc_id = var.vpc_id
-
+  vpc_id     = var.vpc_id
   subnet_ids = var.private_subnet_ids
 
   endpoint_public_access = true
 
-  authentication_mode = "API"
-
+  authentication_mode                      = "API"
   enable_cluster_creator_admin_permissions = true
-
-  enable_irsa = true
+  enable_irsa                              = true
 
   enabled_log_types = [
     "api",
@@ -36,12 +32,27 @@ module "eks" {
     }
 
     vpc-cni = {
-      most_recent = true
+      most_recent    = true
       before_compute = true
     }
 
     eks-pod-identity-agent = {
       most_recent = true
+    }
+
+    metrics-server = {
+      most_recent = true
+    }
+
+    aws-ebs-csi-driver = {
+      most_recent = true
+
+      pod_identity_association = [
+        {
+          role_arn        = aws_iam_role.ebs_csi.arn
+          service_account = "ebs-csi-controller-sa"
+        }
+      ]
     }
   }
 

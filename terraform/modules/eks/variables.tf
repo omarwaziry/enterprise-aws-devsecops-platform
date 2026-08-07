@@ -48,3 +48,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "ebs_csi_role_arn" {
+  description = "IAM role ARN used by the Amazon EBS CSI driver through EKS Pod Identity"
+  type        = string
+  default     = null
+}

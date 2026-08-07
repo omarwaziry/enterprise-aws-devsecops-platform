@@ -27,3 +27,10 @@ output "node_security_group_id" {
   description = "EKS node security group ID"
   value       = module.eks.node_security_group_id
 }
+
+output "ebs_csi_role_arn" {
+  description = "IAM role ARN used by the EBS CSI driver through EKS Pod Identity"
+  value       = aws_iam_role.ebs_csi.arn
+}
+
+
