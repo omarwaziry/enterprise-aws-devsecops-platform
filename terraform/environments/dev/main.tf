@@ -52,6 +52,8 @@ module "eks" {
 
   kubernetes_version = var.kubernetes_version
 
+  aws_region         = var.aws_region
+  
   vpc_id = module.vpc.vpc_id
 
   private_subnet_ids = module.vpc.private_subnet_ids

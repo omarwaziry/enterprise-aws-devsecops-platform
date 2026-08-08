@@ -54,3 +54,7 @@ variable "ebs_csi_role_arn" {
   type        = string
   default     = null
 }
+variable "aws_region" {
+  description = "AWS region where the EKS cluster is deployed"
+  type        = string
+}

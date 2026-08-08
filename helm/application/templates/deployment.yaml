@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ include "devsecops-platform.fullname" . }}
   labels:
-    app: {{ .Release.Name }}
+    app: {{ include "devsecops-platform.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: {{ include "devsecops-platform.name" . }}
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: {{ include "devsecops-platform.name" . }}
     spec:
       containers:
         - name: app
