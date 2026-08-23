@@ -125,7 +125,8 @@ plan.md
 | Alerts | Alertmanager |
 | Logging | CloudWatch |
 | Code Quality | SonarCloud |
-| Security | Trivy |
+| Security | Trivy, tfsec, Checkov, Kyverno |
+| Pre-commit | pre-commit |
 | Authentication | GitHub OIDC |
 | Secrets | AWS Secrets Manager |
 | DNS | Route53 |
@@ -230,6 +231,8 @@ Provision AWS infrastructure.
 - [ ] Managed Node Groups
 - [ ] CloudWatch
 - [ ] S3 Backend
+- [ ] Implement Native S3 State Locking (No DynamoDB)
+- [ ] Parameterize hardcoded values (disk_size, region, capacity_type)
 
 ### Deliverable
 
@@ -270,6 +273,7 @@ Package the application.
 - [ ] ConfigMap
 - [ ] Secret
 - [ ] HPA
+- [ ] Parameterize ECR URI to remove hardcoded AWS account IDs
 
 ### Deliverable
 
@@ -285,6 +289,7 @@ Automate Continuous Integration.
 
 Pipeline
 
+- [ ] Pre-commit hooks configuration
 - [ ] Checkout
 - [ ] Setup Java
 - [ ] Cache Maven
@@ -292,6 +297,7 @@ Pipeline
 - [ ] Unit Tests
 - [ ] SonarCloud Analysis
 - [ ] Quality Gate
+- [ ] IaC Security Scanning (tfsec/checkov)
 - [ ] Trivy Filesystem Scan
 - [ ] Docker Build
 - [ ] Trivy Image Scan
@@ -312,6 +318,7 @@ Automate deployments.
 ### Tasks
 
 - [ ] GitHub OIDC Authentication
+- [ ] Configure GitHub OIDC for EKS authentication (removing local AWS CLI credentials)
 - [ ] Configure kubectl
 - [ ] Authenticate to EKS
 - [ ] Helm Upgrade
@@ -391,6 +398,7 @@ Secure the platform.
 - [ ] Security Groups
 - [ ] SonarCloud
 - [ ] Trivy
+- [ ] Kyverno/OPA Policies
 - [ ] Dependabot
 
 ### Deliverable
@@ -523,7 +531,6 @@ Deployment Successful
 - [ ] OpenTelemetry
 - [ ] Karpenter
 - [ ] External Secrets Operator
-- [ ] Kyverno Policies
 - [ ] Falco Runtime Security
 - [ ] Multi-Environment (Dev/Staging/Prod)
 - [ ] Multi-Region Deployment
