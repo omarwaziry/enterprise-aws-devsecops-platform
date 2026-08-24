@@ -137,7 +137,7 @@ plan.md
 
 # Project Phases
 
-> Current Phase: Phase 8 — GitHub Actions CD (Ready to Start)
+> Current Phase: Phase 9 — Monitoring (Ready to Start)
 
 ---
 
@@ -326,19 +326,22 @@ Automated CI.
 
 # Phase 8 — GitHub Actions CD
 
+## Status
+Completed
+
 ## Goal
 
 Automate deployments.
 
 ### Tasks
 
-- [ ] GitHub OIDC Authentication
-- [ ] Configure GitHub OIDC for EKS authentication (removing local AWS CLI credentials)
-- [ ] Configure kubectl
-- [ ] Authenticate to EKS
-- [ ] Helm Upgrade
-- [ ] Verify Rollout
-- [ ] Smoke Tests
+- [x] GitHub OIDC Authentication
+- [x] Configure GitHub OIDC for EKS authentication (removing local AWS CLI credentials)
+- [x] Configure kubectl
+- [x] Authenticate to EKS
+- [x] Helm Upgrade
+- [x] Verify Rollout
+- [x] Smoke Tests
 
 ### Deliverable
 
