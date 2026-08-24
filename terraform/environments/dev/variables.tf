@@ -60,3 +60,15 @@ variable "node_capacity_type" {
   default     = "ON_DEMAND"
 }
 
+variable "github_repo" {
+  description = "GitHub repository (e.g. omarwaziry/enterprise-aws-devsecops-platform)"
+  type        = string
+  default     = "omarwaziry/enterprise-aws-devsecops-platform"
+}
+
+variable "create_github_oidc_provider" {
+  description = "Whether to create the GitHub OIDC provider in AWS IAM"
+  type        = bool
+  default     = true
+}
+

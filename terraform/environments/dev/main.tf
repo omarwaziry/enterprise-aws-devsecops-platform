@@ -74,3 +74,37 @@ module "eks" {
 
   tags = local.common_tags
 }
+
+module "github_oidc" {
+  source = "../../modules/github-oidc"
+
+  create_oidc_provider = var.create_github_oidc_provider
+
+  github_repo = var.github_repo
+
+  role_name = "${var.project_name}-${var.environment}-github-actions"
+
+  ecr_repository_arns = [module.ecr.repository_arn]
+
+  eks_cluster_arns = [module.eks.cluster_arn]
+
+  tags = local.common_tags
+}
+
+resource "aws_eks_access_entry" "github_actions" {
+  cluster_name  = module.eks.cluster_name
+  principal_arn = module.github_oidc.role_arn
+  type          = "STANDARD"
+
+  tags = local.common_tags
+}
+
+resource "aws_eks_access_policy_association" "github_actions" {
+  cluster_name  = module.eks.cluster_name
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = module.github_oidc.role_arn
+
+  access_scope {
+    type = "cluster"
+  }
+}
