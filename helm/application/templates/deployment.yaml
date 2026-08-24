@@ -14,10 +14,17 @@ spec:
       labels:
         app: {{ include "devsecops-platform.name" . }}
     spec:
+      serviceAccountName: {{ include "devsecops-platform.serviceAccountName" . }}
       containers:
         - name: app
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: {{ include "devsecops-platform.image" . | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          {{- if .Values.configMap.enabled }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "devsecops-platform.fullname" . }}-config
+          {{- end }}
 
           ports:
             - name: http

@@ -52,8 +52,8 @@ module "eks" {
 
   kubernetes_version = var.kubernetes_version
 
-  aws_region         = var.aws_region
-  
+  aws_region = var.aws_region
+
   vpc_id = module.vpc.vpc_id
 
   private_subnet_ids = module.vpc.private_subnet_ids
@@ -65,6 +65,10 @@ module "eks" {
   node_desired_size = var.node_desired_size
 
   node_max_size = var.node_max_size
+
+  node_disk_size = var.node_disk_size
+
+  node_capacity_type = var.node_capacity_type
 
   environment = var.environment
 

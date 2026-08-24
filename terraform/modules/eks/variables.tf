@@ -58,3 +58,15 @@ variable "aws_region" {
   description = "AWS region where the EKS cluster is deployed"
   type        = string
 }
+
+variable "node_disk_size" {
+  description = "Disk size in GiB for worker nodes"
+  type        = number
+  default     = 30
+}
+
+variable "node_capacity_type" {
+  description = "Capacity type for worker nodes (ON_DEMAND or SPOT)"
+  type        = string
+  default     = "ON_DEMAND"
+}

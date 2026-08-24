@@ -137,11 +137,14 @@ plan.md
 
 # Project Phases
 
-> Current Phase: Phase 3 — Docker (In Progress)
+> Current Phase: Phase 7 — GitHub Actions CI (Ready to Start)
 
 ---
 
 # Phase 1 — Project Initialization
+
+## Status
+Completed
 
 ## Goal
 
@@ -149,13 +152,13 @@ Create the repository structure.
 
 ### Tasks
 
-- [ ] Create GitHub repository
-- [ ] Create folder structure
-- [ ] Create README
-- [ ] Create Architecture Diagram
-- [ ] Create LICENSE
-- [ ] Create CONTRIBUTING
-- [ ] Create .gitignore
+- [x] Create GitHub repository
+- [x] Create folder structure
+- [x] Create README
+- [x] Create Architecture Diagram
+- [x] Create LICENSE
+- [x] Create CONTRIBUTING
+- [x] Create .gitignore
 
 ### Deliverable
 
@@ -174,12 +177,12 @@ Develop a production-ready Spring Boot application.
 
 ### Tasks
 
-- [ ] REST API
-- [ ] Health Endpoint
-- [ ] Actuator
-- [ ] Prometheus Metrics
-- [ ] Unit Tests
-- [ ] Integration Tests
+- [x] REST API
+- [x] Health Endpoint
+- [x] Actuator
+- [x] Prometheus Metrics
+- [x] Unit Tests
+- [x] Integration Tests
 
 ### Deliverable
 
@@ -190,7 +193,7 @@ Application runs locally.
 # Phase 3 — Docker
 
 ## Status
-In Progress
+Completed
 
 ## Goal
 
@@ -198,11 +201,11 @@ Containerize the application.
 
 ### Tasks
 
-- [ ] Multi-stage Dockerfile
-- [ ] Non-root user
-- [ ] Optimize image layers
-- [ ] Healthcheck
-- [ ] Local Docker testing
+- [x] Multi-stage Dockerfile
+- [x] Non-root user
+- [x] Optimize image layers
+- [x] Healthcheck
+- [x] Local Docker testing
 
 ### Deliverable
 
@@ -212,27 +215,30 @@ Docker image.
 
 # Phase 4 — Terraform Infrastructure
 
+## Status
+Completed (Ready for Deployment)
+
 ## Goal
 
 Provision AWS infrastructure.
 
 ### Components
 
-- [ ] VPC
-- [ ] Public Subnets
-- [ ] Private Subnets
-- [ ] NAT Gateway
-- [ ] Internet Gateway
-- [ ] Route Tables
-- [ ] Security Groups
-- [ ] IAM Roles
-- [ ] Amazon ECR
-- [ ] Amazon EKS
-- [ ] Managed Node Groups
-- [ ] CloudWatch
-- [ ] S3 Backend
-- [ ] Implement Native S3 State Locking (No DynamoDB)
-- [ ] Parameterize hardcoded values (disk_size, region, capacity_type)
+- [x] VPC
+- [x] Public Subnets
+- [x] Private Subnets
+- [x] NAT Gateway
+- [x] Internet Gateway
+- [x] Route Tables
+- [x] Security Groups
+- [x] IAM Roles
+- [x] Amazon ECR
+- [x] Amazon EKS
+- [x] Managed Node Groups
+- [x] CloudWatch
+- [x] S3 Backend
+- [x] Implement Native S3 State Locking (No DynamoDB)
+- [x] Parameterize hardcoded values (disk_size, region, capacity_type)
 
 ### Deliverable
 
@@ -242,16 +248,19 @@ Running AWS infrastructure.
 
 # Phase 5 — Kubernetes
 
+## Status
+In Progress
+
 ## Goal
 
 Prepare the cluster.
 
 ### Install
 
-- [ ] Metrics Server
-- [ ] AWS Load Balancer Controller
+- [x] Metrics Server
+- [x] AWS Load Balancer Controller
 - [ ] Cluster Autoscaler
-- [ ] EBS CSI Driver
+- [x] EBS CSI Driver
 
 ### Deliverable
 
@@ -261,19 +270,22 @@ Production-ready cluster.
 
 # Phase 6 — Helm
 
+## Status
+Completed
+
 ## Goal
 
 Package the application.
 
 ### Create
 
-- [ ] Deployment
-- [ ] Service
-- [ ] Ingress
-- [ ] ConfigMap
-- [ ] Secret
-- [ ] HPA
-- [ ] Parameterize ECR URI to remove hardcoded AWS account IDs
+- [x] Deployment
+- [x] Service
+- [x] Ingress
+- [x] ConfigMap
+- [x] Secret / ServiceAccount
+- [x] HPA
+- [x] Parameterize ECR URI to remove hardcoded AWS account IDs
 
 ### Deliverable
 

@@ -68,9 +68,9 @@ module "eks" {
 
       subnet_ids = var.private_subnet_ids
 
-      capacity_type = "ON_DEMAND"
+      capacity_type = var.node_capacity_type
 
-      disk_size = 30
+      disk_size = var.node_disk_size
 
       labels = {
         Environment = var.environment
