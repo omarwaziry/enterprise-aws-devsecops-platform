@@ -60,17 +60,16 @@ module "eks" {
     main = {
       name = "main"
 
+      ami_type       = "AL2_x86_64"
       instance_types = var.node_instance_types
 
       min_size     = var.node_min_size
       max_size     = var.node_max_size
       desired_size = var.node_desired_size
 
-      subnet_ids = var.private_subnet_ids
-
+      subnet_ids    = var.private_subnet_ids
       capacity_type = var.node_capacity_type
-
-      disk_size = var.node_disk_size
+      disk_size     = var.node_disk_size
 
       labels = {
         Environment = var.environment
