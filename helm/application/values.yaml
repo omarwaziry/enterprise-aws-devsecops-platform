@@ -13,6 +13,19 @@ serviceAccount:
   name: ""
   automountServiceAccountToken: true
 
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
 configMap:
   enabled: true
   data:

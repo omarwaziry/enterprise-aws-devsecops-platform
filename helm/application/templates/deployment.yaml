@@ -15,10 +15,15 @@ spec:
         app: {{ include "devsecops-platform.name" . }}
     spec:
       serviceAccountName: {{ include "devsecops-platform.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: app
           image: {{ include "devsecops-platform.image" . | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
 
           {{- if .Values.configMap.enabled }}
           envFrom:
@@ -47,3 +52,10 @@ spec:
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}

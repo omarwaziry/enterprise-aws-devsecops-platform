@@ -69,6 +69,10 @@ Helm Deployment
 
 ↓
 
+Kyverno Policy Enforcement
+
+↓
+
 Production Application
 
 ↓
@@ -97,6 +101,7 @@ helm/
 monitoring/
 
 kubernetes/
+    kyverno-policies/
 
 docs/
 
@@ -416,7 +421,7 @@ Secure the platform.
 - [ ] Security Groups
 - [ ] SonarCloud
 - [ ] Trivy
-- [ ] Kyverno/OPA Policies
+- [x] Kyverno/OPA Policies
 - [ ] Dependabot
 
 ### Deliverable

@@ -1,0 +1,46 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-image-registries
+  annotations:
+    policies.kyverno.io/title: Restrict Image Registries
+    policies.kyverno.io/category: Supply Chain Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Pulling container images from untrusted registries can introduce
+      vulnerabilities and malicious code. This policy restricts images
+      to trusted registries only: Amazon ECR, Docker Hub official images,
+      and Amazon Public ECR.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: validate-image-registries
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      validate:
+        message: >-
+          Images must be pulled from trusted registries only:
+          *.dkr.ecr.*.amazonaws.com, public.ecr.aws, or docker.io/library.
+          Image '{{request.object.spec.containers[*].image}}' is not allowed.
+        pattern:
+          spec:
+            containers:
+              - image: "*.dkr.ecr.*.amazonaws.com/* | public.ecr.aws/* | docker.io/library/*"
+    - name: validate-init-container-registries
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      validate:
+        message: >-
+          Init container images must be pulled from trusted registries only.
+        pattern:
+          spec:
+            =(initContainers):
+              - image: "*.dkr.ecr.*.amazonaws.com/* | public.ecr.aws/* | docker.io/library/*"

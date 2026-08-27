@@ -70,3 +70,25 @@ variable "node_capacity_type" {
   type        = string
   default     = "ON_DEMAND"
 }
+
+# -----------------------------------------------------------------------------
+# Kyverno Configuration
+# -----------------------------------------------------------------------------
+
+variable "kyverno_enabled" {
+  description = "Whether to install Kyverno policy engine on the cluster"
+  type        = bool
+  default     = true
+}
+
+variable "kyverno_chart_version" {
+  description = "Helm chart version for Kyverno"
+  type        = string
+  default     = "3.3.4"
+}
+
+variable "kyverno_replica_count" {
+  description = "Number of Kyverno admission controller replicas (use 3 for HA)"
+  type        = number
+  default     = 3
+}

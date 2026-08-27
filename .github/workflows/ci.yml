@@ -89,11 +89,47 @@ jobs:
           soft_fail: false
 
   # ---------------------------------------------------------------------------
-  # Stage 3: Container Build, Image Scan & ECR Push
+  # Stage 3: Kyverno Policy Validation (Shift-Left)
+  # ---------------------------------------------------------------------------
+  kyverno-policy-test:
+    name: Kyverno Policy Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+        with:
+          version: 'v3.15.2'
+
+      - name: Install Kyverno CLI
+        run: |
+          curl -LO https://github.com/kyverno/kyverno/releases/download/v1.13.4/kyverno-cli_v1.13.4_linux_x86_64.tar.gz
+          tar -xzf kyverno-cli_v1.13.4_linux_x86_64.tar.gz
+          sudo mv kyverno /usr/local/bin/
+          kyverno version
+
+      - name: Render Helm Templates
+        run: |
+          helm template devsecops-platform helm/application \
+            --set image.registry=123456789012.dkr.ecr.us-east-1.amazonaws.com \
+            --set image.tag=test-sha \
+            > /tmp/rendered-manifests.yaml
+
+      - name: Validate Policies Against Rendered Manifests
+        run: |
+          echo "Validating Kyverno policies against rendered Helm manifests..."
+          kyverno apply kubernetes/kyverno-policies/ \
+            --resource /tmp/rendered-manifests.yaml
+          echo "All Kyverno policies passed!"
+
+  # ---------------------------------------------------------------------------
+  # Stage 4: Container Build, Image Scan & ECR Push
   # ---------------------------------------------------------------------------
   build-and-push:
     name: Docker Build, Scan & ECR Push
-    needs: [test-and-quality, security-scan]
+    needs: [test-and-quality, security-scan, kyverno-policy-test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code

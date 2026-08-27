@@ -136,3 +136,24 @@ jobs:
           # Terminate background port-forward
           kill $PF_PID
           echo "Smoke tests passed successfully!"
+
+      - name: Kyverno Policy Compliance Check
+        if: vars.AWS_ROLE_ARN != ''
+        run: |
+          echo "Checking Kyverno PolicyReport for namespace: ${{ env.NAMESPACE }}..."
+          
+          # Wait briefly for Kyverno background scans to complete
+          sleep 10
+          
+          # Check for policy violations in the deployment namespace
+          FAIL_COUNT=$(kubectl get policyreport -n ${{ env.NAMESPACE }} -o jsonpath='{.items[*].summary.fail}' 2>/dev/null | tr ' ' '\n' | awk '{s+=$1} END {print s+0}')
+          
+          if [ "$FAIL_COUNT" -gt 0 ]; then
+            echo "WARNING: $FAIL_COUNT Kyverno policy violation(s) detected!"
+            kubectl get policyreport -n ${{ env.NAMESPACE }} -o yaml
+            echo "Review the violations above and remediate."
+            exit 1
+          fi
+          
+          echo "Kyverno compliance check passed — no policy violations detected."
+
