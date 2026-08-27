@@ -6,6 +6,10 @@ metadata:
     app: {{ include "devsecops-platform.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  {{- with .Values.strategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ include "devsecops-platform.name" . }}
@@ -13,6 +17,10 @@ spec:
     metadata:
       labels:
         app: {{ include "devsecops-platform.name" . }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/actuator/prometheus"
     spec:
       serviceAccountName: {{ include "devsecops-platform.serviceAccountName" . }}
       securityContext:

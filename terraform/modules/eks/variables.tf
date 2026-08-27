@@ -92,3 +92,42 @@ variable "kyverno_replica_count" {
   type        = number
   default     = 3
 }
+
+# -----------------------------------------------------------------------------
+# Monitoring Configuration (kube-prometheus-stack)
+# -----------------------------------------------------------------------------
+
+variable "monitoring_enabled" {
+  description = "Whether to install the kube-prometheus-stack (Prometheus, Grafana, Alertmanager)"
+  type        = bool
+  default     = true
+}
+
+variable "kube_prometheus_stack_version" {
+  description = "Helm chart version for kube-prometheus-stack"
+  type        = string
+  default     = "72.6.2"
+}
+
+variable "grafana_admin_password" {
+  description = "Admin password for Grafana"
+  type        = string
+  sensitive   = true
+  default     = "admin"
+}
+
+# -----------------------------------------------------------------------------
+# Logging Configuration (AWS for Fluent Bit)
+# -----------------------------------------------------------------------------
+
+variable "logging_enabled" {
+  description = "Whether to install AWS for Fluent Bit for CloudWatch logging"
+  type        = bool
+  default     = true
+}
+
+variable "log_retention_days" {
+  description = "Number of days to retain CloudWatch logs"
+  type        = number
+  default     = 30
+}
