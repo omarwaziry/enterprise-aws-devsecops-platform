@@ -63,6 +63,18 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
+      - name: Set up JDK 21 and Maven Cache (for Trivy)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Resolve Maven Dependencies (prevents Trivy 429 rate limit)
+        run: |
+          cd application
+          ./mvnw dependency:resolve
+
       - name: Run Trivy Filesystem Scan (Vulnerabilities & Secrets)
         uses: aquasecurity/trivy-action@master
         with:
