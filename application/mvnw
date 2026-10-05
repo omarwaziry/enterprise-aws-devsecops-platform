@@ -43,64 +43,23 @@ esac
 
 # set JAVACMD and JAVACCMD
 set_java_home() {
+  # For Cygwin and MinGW, ensure paths are in Unix format before anything is touched
   if [ -n "${JAVA_HOME-}" ]; then
-    for java_candidate in \
-      "$JAVA_HOME/jre/sh/java" \
-      "$JAVA_HOME/jre/sh/java.exe" \
-      "$JAVA_HOME/bin/java" \
-      "$JAVA_HOME/bin/java.exe"; do
-      if [ -x "$java_candidate" ]; then
-        JAVACMD="$java_candidate"
-        break
+    if [ -x "$JAVA_HOME/jre/sh/java" ]; then
+      # IBM's JDK on AIX uses strange locations for the executables
+      JAVACMD="$JAVA_HOME/jre/sh/java"
+      JAVACCMD="$JAVA_HOME/jre/sh/javac"
+    else
+      JAVACMD="$JAVA_HOME/bin/java"
+      JAVACCMD="$JAVA_HOME/bin/javac"
+
+      if [ ! -x "$JAVACMD" ] || [ ! -x "$JAVACCMD" ]; then
+        echo "The JAVA_HOME environment variable is not defined correctly, so mvnw cannot run." >&2
+        echo "JAVA_HOME is set to \"$JAVA_HOME\", but \"\$JAVA_HOME/bin/java\" or \"\$JAVA_HOME/bin/javac\" does not exist." >&2
+        return 1
       fi
-    done
-
-    for javac_candidate in \
-      "$JAVA_HOME/jre/sh/javac" \
-      "$JAVA_HOME/jre/sh/javac.exe" \
-      "$JAVA_HOME/bin/javac" \
-      "$JAVA_HOME/bin/javac.exe"; do
-      if [ -x "$javac_candidate" ]; then
-        JAVACCMD="$javac_candidate"
-        break
-      fi
-    done
-  fi
-
-  if [ -z "${JAVACMD-}" ] || [ -z "${JAVACCMD-}" ]; then
-    for candidate in \
-      "${JAVA_HOME-}" \
-      "C:/Program Files/Microsoft/jdk-21.0.11.10-hotspot" \
-      "C:/Program Files/Java/jdk-21" \
-      "C:/Program Files/Java/jdk-17" \
-      "/usr/lib/jvm/default-java" \
-      "/usr/lib/jvm/java-21-openjdk-amd64" \
-      "/usr/lib/jvm/java-17-openjdk-amd64"; do
-      if [ -n "$candidate" ]; then
-        for java_candidate in "$candidate/bin/java" "$candidate/bin/java.exe" "$candidate/jre/sh/java" "$candidate/jre/sh/java.exe"; do
-          if [ -x "$java_candidate" ]; then
-            JAVA_HOME="$candidate"
-            JAVACMD="$java_candidate"
-            break
-          fi
-        done
-
-        for javac_candidate in "$candidate/bin/javac" "$candidate/bin/javac.exe" "$candidate/jre/sh/javac" "$candidate/jre/sh/javac.exe"; do
-          if [ -x "$javac_candidate" ]; then
-            JAVA_HOME="$candidate"
-            JAVACCMD="$javac_candidate"
-            break
-          fi
-        done
-      fi
-
-      if [ -n "${JAVACMD-}" ] && [ -n "${JAVACCMD-}" ]; then
-        break
-      fi
-    done
-  fi
-
-  if [ -z "${JAVACMD-}" ] || [ -z "${JAVACCMD-}" ]; then
+    fi
+  else
     JAVACMD="$(
       'set' +e
       'unset' -f command 2>/dev/null
@@ -113,7 +72,7 @@ set_java_home() {
     )" || :
 
     if [ ! -x "${JAVACMD-}" ] || [ ! -x "${JAVACCMD-}" ]; then
-      echo "The java/javac command does not exist in PATH nor is JAVA_HOME set to a valid JDK, so mvnw cannot run." >&2
+      echo "The java/javac command does not exist in PATH nor is JAVA_HOME set, so mvnw cannot run." >&2
       return 1
     fi
   fi
